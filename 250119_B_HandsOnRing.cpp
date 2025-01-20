@@ -2,13 +2,13 @@
 
 using namespace std;
 
+int operationNum(int, int, int, int);
+
 int main(void) {
 
     int N, Q;
 
     cin >> N >> Q;
-
-    int numOfOperation = 0;
 
     char* H = new char[Q];
     int* T = new int[Q];
@@ -17,74 +17,40 @@ int main(void) {
         cin >> H[i] >> T[i];
     }
 
-    int lPos = 1;
-    int rPos = 2;
+    int lPos = 1, rPos = 2;
+
+    int sum = 0;
 
     for(int i = 0; i < Q; i ++) {
-        
         if(H[i] == 'L') {
-            if(lPos == T[i]) continue;
-            bool goRight = true;
-            for(int j = lPos + 1; j != T[i]; j ++) {
-                if(j == N + 1) j -= N;
-                if(j == rPos) {
-                    goRight = false;
-                    break;
-                }
-            }
-            //cout << "goRight: " << goRight << endl;
-            int count  = 0;
-            if(goRight) {
-                while(lPos != T[i]) {
-                    lPos ++;
-                    if(lPos == N + 1) lPos = 1;
-                    count ++;
-                }
-            }else {
-                while(lPos != T[i]) {
-                    lPos --;
-                    if(lPos == 0) lPos = N;
-                    count ++;
-            }
-            
-            }lPos = T[i];
-            numOfOperation += count;
-        }else { //R
-            if(rPos == T[i]) continue;
-            bool goRight = true;
-            for(int j = rPos + 1; j != T[i]; j ++) {
-                if(j == N + 1) j -= N;
-                if(j == lPos) {
-                    goRight = false;
-                    break;
-                }
-            }
-            int count  = 0;
-            if(goRight) {
-                while(rPos != T[i]) {
-                    rPos ++;
-                    if(rPos == N + 1) rPos = 1;
-                    count ++;
-                    //cout << "count: " << count << endl;
-                }
-            }else {
-                while(rPos != T[i]) {
-                    rPos --;
-                    if(rPos == 0) rPos = N;
-                    count ++;
-            }
-            
-            }
+            sum += operationNum(lPos, T[i], rPos, N);
+            lPos = T[i];
+        }else { //H[i] == R
+            sum += operationNum(rPos, T[i], lPos, N);
             rPos = T[i];
-            numOfOperation += count;
-            
         }
-    }//cout << "lPos: " << lPos << " rPos: " << rPos << endl;
+    }
 
-    cout << numOfOperation << endl;
-
+    cout << sum << endl;
 
     delete[] H;
     delete[] T;
+
     return 0;
+}
+
+int operationNum(int sPos, int dPos, int oPos, int N) {
+
+    int operation = 0;
+    if(sPos == dPos) {
+        operation = 0;
+    }else {
+        if(sPos > dPos) swap(sPos, dPos);
+        if(sPos < oPos && oPos < dPos) {
+            operation = sPos + N - dPos;
+        }else {
+            operation = dPos - sPos;
+        }
+    }
+    return operation;
 }
