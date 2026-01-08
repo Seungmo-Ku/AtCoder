@@ -29,9 +29,9 @@ int main(void) {
     long long max = maxX + maxY;
 
     for (int y = 2; y < N; y ++) {
-        int newMaxX = cumA[y - 1] - cumB[y - 1];
+        long long newMaxX = cumA[y - 1] - cumB[y - 1];
         if (newMaxX > maxX) maxX = newMaxX;
-        int newMaxY = cumB[y] + cumC[N] - cumC[y];
+        long long newMaxY = cumB[y] + cumC[N] - cumC[y];
         if (newMaxY + maxX > max) max = newMaxY + maxX;
     }
 
