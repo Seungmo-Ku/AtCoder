@@ -29,10 +29,10 @@ int main(void) {
             int multi3 = 3 * multi;
             int multi7 = 7 * multi;
             if (rightMap.count(multi3) && rightMap.count(multi7)) {
-                output += rightMap[multi3] * rightMap[multi7];
+                output += 1LL * rightMap[multi3] * rightMap[multi7];
             }
             if (leftMap.count(multi3) && leftMap.count(multi7)) {
-                output += leftMap[multi3] * leftMap[multi7];
+                output += 1LL * leftMap[multi3] * leftMap[multi7];
             }
         }
 
